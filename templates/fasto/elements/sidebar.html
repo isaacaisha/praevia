@@ -1,0 +1,153 @@
+{% load static %}
+<div class="deznav">
+    <div class="deznav-scroll">
+        <a class="add-project-sidebar btn btn-primary" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#addProjectSidebar" >+ New Project</a>
+        <ul class="metismenu" id="menu">
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <i class="flaticon-layout"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'fasto:index' %}">Dashboard Light</a></li>
+                    <li><a href="{% url 'fasto:index-2' %}">Dashboard Dark</a></li>
+                    <li><a href="{% url 'fasto:projects' %}">Project</a></li>
+                    <li><a href="{% url 'fasto:contacts' %}">Contact</a></li>
+                    <li><a href="{% url 'fasto:kanban' %}">Kanban</a></li>
+                    <li><a href="{% url 'fasto:calendar' %}">Calendar</a></li>
+                    <li><a href="{% url 'fasto:messages' %}">Messages</a></li>
+                </ul>
+
+            </li>
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                <i class="flaticon-monitor"></i>
+                    <span class="nav-text">Apps</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'fasto:app-profile' %}">Profile</a></li>
+                    <li><a href="{% url 'fasto:post-details' %}">Post Details</a></li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Email</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'fasto:email-compose' %}">Compose</a></li>
+                            <li><a href="{% url 'fasto:email-inbox' %}">Inbox</a></li>
+                            <li><a href="{% url 'fasto:email-read' %}">Read</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'fasto:app-calender' %}">Calendar</a></li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Shop</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'fasto:ecom-product-grid' %}">Product Grid</a></li>
+							<li><a href="{% url 'fasto:ecom-product-list' %}">Product List</a></li>
+							<li><a href="{% url 'fasto:ecom-product-detail' %}">Product Details</a></li>
+							<li><a href="{% url 'fasto:ecom-product-order' %}">Order</a></li>
+							<li><a href="{% url 'fasto:ecom-checkout' %}">Checkout</a></li>
+							<li><a href="{% url 'fasto:ecom-invoice' %}">Invoice</a></li>
+							<li><a href="{% url 'fasto:ecom-customers' %}">Customers</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <i class="flaticon-bar-chart-1"></i>
+                    <span class="nav-text">Charts</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'fasto:chart-flot' %}">Flot</a></li>
+					<li><a href="{% url 'fasto:chart-morris' %}">Morris</a></li>
+					<li><a href="{% url 'fasto:chart-chartjs' %}">Chartjs</a></li>
+					<li><a href="{% url 'fasto:chart-chartist' %}">Chartist</a></li>
+					<li><a href="{% url 'fasto:chart-sparkline' %}">Sparkline</a></li>
+					<li><a href="{% url 'fasto:chart-peity' %}">Peity</a></li>
+                </ul>
+            </li>
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <i class="flaticon-web"></i>
+                    <span class="nav-text">Bootstrap</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'fasto:ui-accordion' %}">Accordion</a></li>
+					<li><a href="{% url 'fasto:ui-alert' %}">Alert</a></li>
+					<li><a href="{% url 'fasto:ui-badge' %}">Badge</a></li>
+					<li><a href="{% url 'fasto:ui-button' %}">Button</a></li>
+					<li><a href="{% url 'fasto:ui-modal' %}">Modal</a></li>
+                    <li><a href="{% url 'fasto:ui-button-group' %}">Button Group</a></li>
+                    <li><a href="{% url 'fasto:ui-list-group' %}">List Group</a></li>
+                    <li><a href="{% url 'fasto:ui-media-object' %}">Media Object</a></li>
+                    <li><a href="{% url 'fasto:ui-card' %}">Cards</a></li>
+                    <li><a href="{% url 'fasto:ui-carousel' %}">Carousel</a></li>
+                    <li><a href="{% url 'fasto:ui-dropdown' %}">Dropdown</a></li>
+                    <li><a href="{% url 'fasto:ui-popover' %}">Popover</a></li>
+                    <li><a href="{% url 'fasto:ui-progressbar' %}">Progressbar</a></li>
+                    <li><a href="{% url 'fasto:ui-tab' %}">Tab</a></li>
+                    <li><a href="{% url 'fasto:ui-typography' %}">Typography</a></li>
+                    <li><a href="{% url 'fasto:ui-pagination' %}">Pagination</a></li>
+                    <li><a href="{% url 'fasto:ui-grid' %}">Grid</a></li>
+
+                </ul>
+            </li>
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <i class="flaticon-plugin"></i>
+                    <span class="nav-text">Plugins</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'fasto:uc-select2' %}">Select 2</a></li>
+					<li><a href="{% url 'fasto:uc-nestable' %}">Nestable</a></li>
+					<li><a href="{% url 'fasto:uc-noui-slider' %}">Noui Slider</a></li>
+					<li><a href="{% url 'fasto:uc-sweetalert' %}">Sweet Alert</a></li>
+					<li><a href="{% url 'fasto:uc-toastr' %}">Toastr</a></li>
+					<li><a href="{% url 'fasto:map-jqvmap' %}">Jqv Map</a></li>
+					<li><a href="{% url 'fasto:uc-lightgallery' %}">Light Gallery</a></li>
+                </ul>
+            </li>
+            <li><a href="{% url 'fasto:widget-basic' %}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-admin"></i>
+                    <span class="nav-text">Widget</span>
+                </a>
+            </li>
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <i class="flaticon-contract"></i>
+                    <span class="nav-text">Forms</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'fasto:form-element' %}">Form Elements</a></li>
+                    <li><a href="{% url 'fasto:form-wizard' %}">Wizard</a></li>
+					<li><a href="{% url 'fasto:form-editor' %}">CKeditor</a></li>
+					<li><a href="{% url 'fasto:form-pickers' %}">Pickers</a></li>
+					<li><a href="{% url 'fasto:form-validation' %}">Jquery Validate</a></li>
+                </ul>
+            </li>
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <i class="flaticon-table"></i>
+                    <span class="nav-text">Table</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'fasto:table-bootstrap-basic' %}">Bootstrap</a></li>
+					<li><a href="{% url 'fasto:table-datatable-basic' %}">Datatable</a></li>
+                </ul>
+            </li>
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <i class="flaticon-newsletter"></i>
+                    <span class="nav-text">Pages</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{% url 'fasto:page-register' %}">Register</a></li>
+                    <li><a href="{% url 'fasto:page-login' %}">Login</a></li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'fasto:page-error-400' %}">Error 400</a></li>
+                            <li><a href="{% url 'fasto:page-error-403' %}">Error 403</a></li>
+                            <li><a href="{% url 'fasto:page-error-404' %}">Error 404</a></li>
+                            <li><a href="{% url 'fasto:page-error-500' %}">Error 500</a></li>
+                            <li><a href="{% url 'fasto:page-error-503' %}">Error 503</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'fasto:page-lock-screen' %}">Lock Screen</a></li>
+                    <li><a href="{% url 'fasto:page-empty' %}">Empty Page</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="copyright">
+            <p><strong>Fasto Django Admin Template</strong> © 2024 All Rights Reserved</p>
+            <p class="fs-12">Made with <span class="heart"></span> by DexignZone</p>
+        </div>
+    </div>
+</div>

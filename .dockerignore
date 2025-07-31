@@ -1,0 +1,20 @@
+# .dockerignore
+*
+!.gitignore
+!requirements.txt
+!manage.py
+!praevia_project/
+!users/
+!praevia_app/
+!atmp_api/
+!dashboard/
+!fasto/
+!templates/
+!static/
+!staticfiles/
+!media/
+!entrypoint.sh
+!docker-compose*
+!Dockerfile
+!.env.prod
+!locale/
