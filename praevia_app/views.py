@@ -164,6 +164,7 @@ class IncidentCreateView(ProviderOrSuperuserMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["page_title"] = "Report Incident"
         # Main form is already in context as 'form'
         context['entreprise_form'] = context['form'].entreprise_form
         context['salarie_form'] = context['form'].salarie_form
@@ -264,6 +265,7 @@ class IncidentListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["page_title"] = "Incidents"
         context['status_choices'] = DossierStatus.choices
         return context
 
@@ -287,6 +289,7 @@ class IncidentDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["page_title"] = "Detail"
         incident = self.get_object()
         
         # Safely get the 'contentieux' object
@@ -330,6 +333,7 @@ class IncidentUpdateView(ProviderOrSuperuserMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Main form is already in context as 'form'
+        context["page_title"] = "Update"
         context['entreprise_form'] = context['form'].entreprise_form
         context['salarie_form'] = context['form'].salarie_form
         context['accident_form'] = context['form'].accident_form
@@ -419,6 +423,15 @@ class IncidentDeleteView(ProviderOrSuperuserMixin, DeleteView):
     success_url = reverse_lazy('praevia_app:incident-list')
     context_object_name = 'incident'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["page_title"] = "Delete"
+
+        context['incident_pk'] = self.incident.pk 
+        context['documents'] = self.incident.documents.all() 
+        return context
+    
     def get_queryset(self):
         user = self.request.user
         queryset = DossierATMP.objects.all()
@@ -466,6 +479,9 @@ class ContentieuxCreateView(SafetyManagerMixin, CreateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        context["page_title"] = "Contentieux"
+
         # Ensure dossier_pk is passed for the cancel button URL
         context['dossier_pk'] = self.kwargs['dossier_pk'] # or self.dossier.pk if self.dossier is always set here
         return context
@@ -495,6 +511,8 @@ class JuridiqueDashboardHTMLView(LoginRequiredMixin, UserPassesTestMixin, Templa
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
+        context["page_title"] = "Juridique"
+        
         context['total_contentieux'] = Contentieux.objects.count()
         context['contentieux_by_status'] = Contentieux.objects.values('status').annotate(count=Count('id')).order_by('status')
         
@@ -520,6 +538,8 @@ class RHDashboardHTMLView(LoginRequiredMixin, UserPassesTestMixin, TemplateView)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
+        context["page_title"] = "Ressources Humaines"
+
         context['total_incidents'] = DossierATMP.objects.count()
         context['incidents_by_status'] = DossierATMP.objects.values('status').annotate(count=Count('id')).order_by('status')
         
@@ -546,6 +566,8 @@ class QSEDashboardHTMLView(LoginRequiredMixin, UserPassesTestMixin, TemplateView
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
+        context["page_title"] = "QSE"
+
         context['total_incidents'] = DossierATMP.objects.count()
         context['incidents_by_status'] = DossierATMP.objects.values('status').annotate(count=Count('id')).order_by('status')
         
@@ -573,6 +595,8 @@ class DirectionDashboardHTMLView(LoginRequiredMixin, UserPassesTestMixin, Templa
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
+        context["page_title"] = "Direction"
+
         context['total_dossiers'] = DossierATMP.objects.count()
         context['total_contentieux'] = Contentieux.objects.count()
         context['total_audits'] = Audit.objects.count()
@@ -614,6 +638,9 @@ class DocumentUploadView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        context["page_title"] = "Upload"
+
         context['incident_pk'] = self.incident.pk 
         context['documents'] = self.incident.documents.all() 
         return context
@@ -728,6 +755,13 @@ class DocumentDeleteView(LoginRequiredMixin, DeleteView):
             if redirect_incident_pk:
                 return redirect(reverse('praevia_app:incident-detail', kwargs={'pk': redirect_incident_pk}))
             return redirect(request.META.get('HTTP_REFERER', reverse_lazy('praevia_app:dashboard')))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["page_title"] = "Delete"
+
+        return context
 
     def get_success_url(self):
         """
