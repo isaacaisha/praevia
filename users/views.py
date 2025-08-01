@@ -24,6 +24,14 @@ class RegisterView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('two_factor:login')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Add the page title to the context
+        context["page_title"] = "Register"
+
+        return context
+
 
 class CustomLoginView(TwoFactorLoginView):
     def get_form_list(self):
@@ -34,6 +42,9 @@ class CustomLoginView(TwoFactorLoginView):
 
     def get_context_data(self, form, **kwargs):
         context = super().get_context_data(form=form, **kwargs)
+
+        # Add the page title to the context
+        context["page_title"] = "Login"
             
         # Try to get email/username from form data (prefixed with step name)
         # form.data is a QueryDict that has all POST data, including the current step's fields

@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from praevia_app import views_api
+from praevia_app.views_api import RootAPIView
 from django.conf import settings
 from django.views.generic import RedirectView
 from two_factor.urls import urlpatterns as tf_urls
@@ -16,36 +16,26 @@ admin.site.index_title  =  "Dashboard"
 #handler404 = 'dashboard.views.custom_page_not_found_view'
 
 urlpatterns = [
-    # 1) Root URL (“/”) → redirect to the dashboard URL by its name
-    #path(
-    #    '',
-    #    RedirectView.as_view(pattern_name='praevia_app:dashboard', permanent=False),
-    #    name='root-redirect'
-    #),
+    # 1) Root URL (“/”)
+    path('', include(('praevia_app.urls','praevia_app'), namespace='praevia_app')),
 
     # 2) Admin site
     path('admin/', admin.site.urls),
 
-    # Custom API Root - now points to your custom APIRootView
-    path('praevia/api/', views_api.RootAPIView.as_view(), name='api-root'),
-
     # 3) Built‑in auth views (login, logout, password reset at /accounts/…)
-    path('accounts/', include(('django.contrib.auth.urls', 'accounts'), namespace='accounts')),
-    # 2FA default URLs (login, setup, backup tokens, QR, etc.)
-    #path('account/', include('two_factor.urls', namespace='two_factor')),
-    path('', include(tf_urls)),  # Include 2FA URLs
+    path('two_fa', include(tf_urls)),  # Include 2FA URLs
 
     # 4) Your custom user URLs (register, etc.); still lives under /register/, /login/, etc.
     path('users/', include('users.urls', namespace='users')),
 
-    # 5) Dashboard pages under /dashboard/
-    path('',include('fasto.urls', namespace='fasto')),
+    # 5) Custom API Root - now points to your custom APIRootView
+    path('praevia/api/', RootAPIView.as_view(), name='api-root'),
+
+    # 6) Dashboard pages under /dashboard/
+    path('fasto/',include('fasto.urls', namespace='fasto')),
     #path('dashboard/', include('dashboard.urls', namespace='dashboard')),
 
-    # 6) praevia_app
-    path('praevia/', include(('praevia_app.urls','praevia_app'), namespace='praevia_app')),
-
-    # Serve favicon.ico
+    # 7) Serve favicon.ico
     path('favicon.ico', RedirectView.as_view(url='/static/ico/favicon_api.ico', permanent=True)),
 ]
 

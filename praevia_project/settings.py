@@ -283,7 +283,7 @@ else:
 # URL settings for 2FA
 #LOGIN_URL = 'two_factor:login'
 LOGIN_URL = reverse_lazy('users:login')
-LOGIN_REDIRECT_URL = reverse_lazy('fasto:index')
+LOGIN_REDIRECT_URL = reverse_lazy('praevia_app:dashboard')
 LOGOUT_REDIRECT_URL = reverse_lazy('users:login')
 
 # 2FA options (optional customizations)

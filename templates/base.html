@@ -26,8 +26,7 @@
         {% for cssurl in dz_array.global.css %}
         <link rel="stylesheet" href="{% static cssurl %}">
         {% endfor %}
-        {% block additional_css %}
-        {% endblock %}
+        {% block additional_css %}{% endblock %}
         <link rel="stylesheet" href="{% static 'fasto/css/style.css' %}">
         
     </head>
@@ -139,8 +138,9 @@
     <script src="{% static jsurl %}"></script>
     {% endfor %}
     
-    {% block additional_js %}
-    {% endblock %}
+    {% block additional_js %}{% endblock %}
+
+    <script src="{% static 'js/theme-switcher.js' %}"></script>
 
 </body>
 </html>

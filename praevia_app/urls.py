@@ -58,7 +58,7 @@ urlpatterns = [
     
     # ─── HTML frontend ────────────────────────────────────────────
     #path('', RedirectView.as_view(pattern_name='praevia_app:dashboard', permanent=False)),
-    path('dashboard/', DashboardView.as_view(), name='dashboard'),
+    path('', DashboardView.as_view(), name='dashboard'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('incidents/', IncidentListView.as_view(), name='incident-list'),
     path('incidents/create/', IncidentCreateView.as_view(), name='incident-create'),

@@ -42,42 +42,79 @@ TemoinFormSet = inlineformset_factory(
 # ---------------------- HTML Views (Django Templates) ----------------------
 
 class DashboardView(TemplateView):
-    template_name = 'praevia_app/dashboard.html'
+    template_name = "praevia_app/dashboard.html"
 
     def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        user = self.request.user # user will be an AnonymousUser object if not logged in
-        
-        # You might want to adjust logic inside here if specific data should only
-        # appear for authenticated users, e.g., using `if user.is_authenticated:`
-        if user.is_authenticated:
-            if user.role == UserRole.EMPLOYEE:
-                ctx['incidents_count'] = DossierATMP.objects.filter(created_by=user).count()
-                ctx['pending_incidents'] = DossierATMP.objects.filter(
-                    created_by=user,
-                    status=DossierStatus.A_ANALYSER
-                ).count()
-            elif user.role == UserRole.SAFETY_MANAGER:
-                ctx['incidents_count'] = DossierATMP.objects.filter(safety_manager=user).count()
-                ctx['pending_incidents'] = DossierATMP.objects.filter(
-                    safety_manager=user,
-                    status=DossierStatus.A_ANALYSER
-                ).count()
-            else: # Admin or Superuser for authenticated users
-                ctx['incidents_count'] = DossierATMP.objects.count()
-                ctx['pending_incidents'] = DossierATMP.objects.filter(
-                    status=DossierStatus.A_ANALYSER
-                ).count()
-            
-            ctx['contentieux_count'] = Contentieux.objects.count()
-            ctx['audits_count'] = Audit.objects.count()
-        else:
-            # Optionally, set default or empty values for non-authenticated users
-            ctx['incidents_count'] = None
-            ctx['pending_incidents'] = None
-            ctx['contentieux_count'] = None
-            ctx['audits_count'] = None
-            
+        ctx  = super().get_context_data(**kwargs)
+        # Add the page title to the context
+        ctx["page_title"] = "Praevia Dashboard"
+        user = self.request.user
+        uid  = user.id if user.is_authenticated else None
+
+        total_incidents   = DossierATMP.objects.count()
+        pending_incidents = DossierATMP.objects.filter(status=DossierStatus.A_ANALYSER).count()
+        total_contentieux = Contentieux.objects.count()
+        total_audits      = Audit.objects.count()
+
+        # Build all cards—always
+        all_cards = [
+            {
+                "icon":     "E",
+                "label":    "Mes incidents",
+                "url":      reverse("praevia_app:incident-list"),
+                "count":    DossierATMP.objects.filter(created_by_id=uid).count(),
+                "bg_class": "primary",
+                "icon_fs":  "fs-3",
+                "size_cls": "role-icon-md",   # use your .role-icon-md (5rem)
+            },
+            {
+                "icon":     "S",
+                "label":    "Sous ma responsabilité",
+                "url":      reverse("praevia_app:incident-list"),
+                "count":    DossierATMP.objects.filter(safety_manager_id=uid).count(),
+                "bg_class": "info",
+                "icon_fs":  "fs-3",
+                "size_cls": "role-icon-md",
+            },
+            {
+                "icon":     "J",
+                "label":    "Espace Juridique",
+                "url":      reverse("praevia_app:dashboard-juridique"),
+                "count":    total_contentieux,
+                "bg_class": "warning",
+                "icon_fs":  "fs-2",
+                "size_cls": "role-icon-sm",   # smaller (4rem)
+            },
+            {
+                "icon":     "RH",
+                "label":    "Espace RH",
+                "url":      reverse("praevia_app:dashboard-rh"),
+                "count":    total_audits,
+                "bg_class": "success",
+                "icon_fs":  "fs-4",
+                "size_cls": "role-icon-lg",   # large (6rem)
+            },
+            {
+                "icon":     "QSE",
+                "label":    "Espace QSE",
+                "url":      reverse("praevia_app:dashboard-qse"),
+                "count":    total_incidents,
+                "bg_class": "danger",
+                "icon_fs":  "fs-4",
+                "size_cls": "role-icon-lg",
+            },
+            {
+                "icon":     "D",
+                "label":    "Direction",
+                "url":      reverse("praevia_app:dashboard-direction"),
+                "count":    pending_incidents,
+                "bg_class": "dark",
+                "icon_fs":  "fs-3",
+                "size_cls": "role-icon-md",
+            },
+        ]
+
+        ctx["cards"] = all_cards
         return ctx
 
 
@@ -103,6 +140,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["page_title"] = "Profile"
         # Add additional context specific to the profile page
         context['has_2fa'] = TOTPDevice.objects.filter(user=self.request.user, confirmed=True).exists()
         # You might also want a link to change password
